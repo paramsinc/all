@@ -4,4 +4,4 @@ This code template builds a Retrieval-Augmented Generation (RAG) model for legal
 
 It is extensible and can be updated for really any use-case.
 
-The notebook to use is `rag_template_legal_docs.ipynb` and the legal files to use are in `files`.
+The notebook to use is `rag_template_legal_docs.ipynb` and the regulatory files to use are in `files`.
