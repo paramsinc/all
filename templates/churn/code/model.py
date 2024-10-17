@@ -1,11 +1,9 @@
+from code.config import config
+
 import tensorflow as tf
 from keras import layers, models
 
 from .data import event_type_to_int, max_sequence_length
-
-# TODO add the config vars
-
-TRANSFORMER_LAYERS: int = 3
 
 
 def transformer_encoder(
@@ -59,7 +57,7 @@ def create_model() -> models.Model:
     x = layers.Concatenate()([event_embedding, time_features])
 
     # Transformer-like Encoder layers
-    for _ in range(TRANSFORMER_LAYERS):
+    for _ in range(config.transformer_layers):
         x = transformer_encoder(x, head_size=64, num_heads=4, ff_dim=256, dropout=0.1)
 
     # Global pooling and output layer
@@ -70,9 +68,3 @@ def create_model() -> models.Model:
     model = models.Model(inputs=[event_input, time_input], outputs=output_layer)
 
     return model
-
-
-# Create the model
-model = create_model()
-model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-print(model.summary())

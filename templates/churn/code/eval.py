@@ -10,7 +10,6 @@ from sklearn.metrics import (
 )
 
 from .data import event_type_to_int
-from .train import X_test_event, X_test_time, history, model, y_test
 
 
 def evaluate_model(model, X_test_event, X_test_time, y_test, history):
@@ -101,6 +100,3 @@ def evaluate_model(model, X_test_event, X_test_time, y_test, history):
     plt.legend()
     plt.tight_layout()
     plt.show()
-
-
-evaluate_model(model, X_test_event, X_test_time, y_test, history)

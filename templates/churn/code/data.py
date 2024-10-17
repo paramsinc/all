@@ -1,4 +1,5 @@
 # %%
+from code.config import config
 from datetime import datetime, timedelta
 
 import numpy as np
@@ -18,12 +19,10 @@ event_dtype = pl.Enum(
     ]
 )
 
-# TODO wget
-path = ""
 
 washes_df = (
     pl.read_csv(
-        path + "raw_transactions.csv",
+        config.path + "raw_transactions.csv",
         columns=["MEMBERSHIP_ID", "CREATED_AT"],
         schema_overrides={
             "MEMBERSHIP_ID": pl.Utf8,
@@ -37,7 +36,7 @@ washes_df = (
 
 churn_df = (
     pl.read_csv(
-        path + "raw_churn_events.csv",
+        config.path + "raw_churn_events.csv",
         columns=["MEMBERSHIP_ID", "CHURN_DATE", "CHURN_TYPE"],
         schema_overrides={
             "MEMBERSHIP_ID": pl.Utf8,
@@ -58,7 +57,7 @@ churn_df = (
 
 membership_df = (
     pl.read_csv(
-        path + "raw_memberships.csv",
+        config.path + "raw_memberships.csv",
         columns=["MEMBERSHIP_ID", "CREATED_AT", "TRANSACTION_CATEGORY"],
         schema_overrides={
             "MEMBERSHIP_ID": pl.Utf8,
@@ -135,11 +134,8 @@ sequences: list[list[int]] = []
 time_differences: list[list[int]] = []
 labels: list[int] = []
 
-# CHURN_DAYS_OUT = 90
-CHURN_DAYS_OUT = 30
-MIN_EVENTS = 20
 
-filter_non_churners_ts = last_timestamp - timedelta(days=CHURN_DAYS_OUT)
+filter_non_churners_ts = last_timestamp - timedelta(days=config.churn_days_out)
 print(filter_non_churners_ts)
 
 for membership_id, events in tqdm(membership_dict.items(), desc="Processing Features"):
@@ -160,7 +156,7 @@ for membership_id, events in tqdm(membership_dict.items(), desc="Processing Feat
         continue
 
     # if there are not 20 events, just filter it out... too much noise
-    if len(events) < MIN_EVENTS:
+    if len(events) < config.min_events:
         continue
 
     # Extract the sequence of event types
@@ -203,12 +199,10 @@ max_sequence_length = max(len(seq) for seq in sequences)
 # max time diff will be the same as max seq but just for clarity:
 max_time_diff_length = max(len(i) for i in normalized_time_differences)
 
-MAX_EMBEDDING_LEN = 150
-# MAX_EMBEDDING_LEN = 50
 
 # choose a reasonable max sequence length and time diff length
-max_sequence_length = min(MAX_EMBEDDING_LEN, max_sequence_length)
-max_time_diff_length = min(MAX_EMBEDDING_LEN, max_time_diff_length)
+max_sequence_length = min(config.max_embedding_len, max_sequence_length)
+max_time_diff_length = min(config.max_embedding_len, max_time_diff_length)
 
 # Pad event sequences
 padded_sequences = utils.pad_sequences(
