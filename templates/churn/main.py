@@ -1,5 +1,3 @@
-from devtools import debug
-
 from src.config import config
 from src.eval import plot_eval
 from src.model import create_model
@@ -12,8 +10,6 @@ if __name__ == "__main__":
     X_train_event, X_test_event, X_train_time, X_test_time, y_train, y_test = (
         split_data(limit=LIMIT)
     )
-
-    # debug(X_train_event, X_test_event, X_train_time, X_test_time, y_train, y_test)
 
     # Create the model
     model = create_model()

@@ -5,7 +5,6 @@ from enum import Enum
 
 import keras
 import numpy as np
-from devtools import debug
 from fastapi import FastAPI, Request, Response
 from pydantic import BaseModel
 
@@ -85,5 +84,4 @@ def predict_churn(sequences: list[list[Event]]) -> list[float]:
     )
 
     predictions: list[float] = model.predict([padded_sequences, padded_time_diffs])
-    debug(predictions)
     return predictions

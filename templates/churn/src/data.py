@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 import joblib
 import numpy as np
 import polars as pl
-from devtools import debug
 from keras import utils
 from sklearn.preprocessing import MinMaxScaler
 from tqdm import tqdm
@@ -312,8 +311,6 @@ def get_padded_sequences_and_time_diffs_and_labels(
         value=0,
         dtype="int16",
     )
-
-    debug(normalized_time_differences)
 
     # Pad time difference sequences
     padded_time_diffs = utils.pad_sequences(

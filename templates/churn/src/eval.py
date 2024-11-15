@@ -1,7 +1,6 @@
 import keras
 import matplotlib.pyplot as plt
 import seaborn as sns
-from devtools import debug
 from sklearn.metrics import (
     auc,
     average_precision_score,
@@ -22,7 +21,6 @@ def plot_eval(
     history: keras.callbacks.History,
 ) -> None:
     # Make predictions
-    debug(X_test_event, X_test_time)
     y_pred_proba = model.predict([X_test_event, X_test_time])
     y_pred = (y_pred_proba > 0.5).astype(int)
 
