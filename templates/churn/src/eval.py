@@ -1,5 +1,7 @@
+import keras
 import matplotlib.pyplot as plt
 import seaborn as sns
+from devtools import debug
 from sklearn.metrics import (
     auc,
     average_precision_score,
@@ -9,11 +11,18 @@ from sklearn.metrics import (
     roc_curve,
 )
 
-from .data import event_type_to_int
+from src.data import event_type_to_int
 
 
-def evaluate_model(model, X_test_event, X_test_time, y_test, history):
+def plot_eval(
+    model,
+    X_test_event: list[list[int]],
+    X_test_time: list[list[float]],
+    y_test: list[int],
+    history: keras.callbacks.History,
+) -> None:
     # Make predictions
+    debug(X_test_event, X_test_time)
     y_pred_proba = model.predict([X_test_event, X_test_time])
     y_pred = (y_pred_proba > 0.5).astype(int)
 

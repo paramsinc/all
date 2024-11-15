@@ -1,18 +1,25 @@
-from code.config import config
-from code.eval import evaluate_model
-from code.model import create_model
-from code.train import split_data, train_model
+from devtools import debug
+
+from src.config import config
+from src.eval import plot_eval
+from src.model import create_model
+from src.train import split_data, train_model
+
+LIMIT = None
 
 if __name__ == "__main__":
+    # prep the data
+    X_train_event, X_test_event, X_train_time, X_test_time, y_train, y_test = (
+        split_data(limit=LIMIT)
+    )
+
+    # debug(X_train_event, X_test_event, X_train_time, X_test_time, y_train, y_test)
+
     # Create the model
     model = create_model()
     model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
     print(model.summary())
 
-    # prep the data
-    X_train_event, X_test_event, X_train_time, X_test_time, y_train, y_test = (
-        split_data()
-    )
     # now train the model
     history = train_model(
         model=model,
@@ -25,7 +32,7 @@ if __name__ == "__main__":
     )
 
     # Evaluate the model
-    evaluate_model(
+    plot_eval(
         model=model,
         X_test_event=X_test_event,
         X_test_time=X_test_time,
@@ -35,5 +42,3 @@ if __name__ == "__main__":
 
     # Save the model
     model.save(config.prod_model_path)
-
-    # TODO store it in GCP
