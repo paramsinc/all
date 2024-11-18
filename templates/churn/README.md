@@ -3,9 +3,7 @@
 A deep learning system that predicts customer churn by analyzing temporal sequences of membership events. Built with Keras using transformer architecture for high-accuracy predictions.
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
-[![Keras Version](https://img.shields.io/badge/keras-3.0%2B-red)](https://keras.io/)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Code Style](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
+[![Keras Version](https://img.shields.io/badge/keras-3.6%2B-red)](https://keras.io/)
 
 ## Overview
 
