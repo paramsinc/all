@@ -28,3 +28,4 @@ config.transformer_configs = [
         "dropout": 0.2,
     }
 ]
+config.model_dropout_rate = 0.1
