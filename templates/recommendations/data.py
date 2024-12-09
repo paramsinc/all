@@ -17,13 +17,13 @@ def get_raw_data():
     ON YOUR OWN DATA.
 
     Returns:
-        - interaction_data: List of dicts (on per interaction), such as:
+        - interaction_data: List of dicts (one per interaction), such as:
             `[{"user": str, "item": str, "score": float}, ...]`
             `"score"` is optional.
         - user_data: Dict such as {"feature_name": value, ...}
         - item_data: Dict such as { "feature_name": value, ...}
     """
-    df = pd.read_csv(config.csv_fpath)
+    df = pd.read_csv(config.raw_data_fpath)
     interaction_data = []
     user_data = {}
     item_data = {}

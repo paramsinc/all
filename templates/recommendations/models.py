@@ -3,6 +3,7 @@ import keras
 
 class Encoder(keras.Model):
     """Model that embeds objects via their IDs and optionally features."""
+
     def __init__(self, num_objects, embedding_dim, features_shape=None, dtype=None):
         index_input = keras.Input(shape=(), name="id")
         embeddings = keras.layers.Embedding(num_objects, embedding_dim)(index_input)
@@ -26,7 +27,7 @@ class Encoder(keras.Model):
 
 class EmbeddingModel(keras.Model):
     """Model that trains embeddings of users and items.
-    
+
     The training is configured so that the dot product
     between a user embedding and an item embedding produces
     a prediction as to the potential interaction score (affinity)
@@ -37,6 +38,7 @@ class EmbeddingModel(keras.Model):
 
     IDs are integer arrays, which features are dense float arrays.
     """
+
     def __init__(
         self,
         num_users,
