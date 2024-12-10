@@ -1,11 +1,11 @@
 import random
+
 import keras
+import numpy as np
+import pandas as pd
 
 # TF is only used for tf.data - the code works with all backends
 import tensorflow as tf
-
-import numpy as np
-import pandas as pd
 
 from config import config
 
@@ -22,7 +22,8 @@ def get_raw_data():
             `"score"` is optional.
         - user_data: Dict such as {"feature_name": value, ...}
         - item_data: Dict such as { "feature_name": value, ...}
-    """
+
+    # Example
     df = pd.read_csv(config.raw_data_fpath)
     interaction_data = []
     user_data = {}
@@ -31,6 +32,31 @@ def get_raw_data():
         items = row.no_seq_anonyme.split(" ")
         for item in items:
             interaction_data.append({"user": row.id_usager_anonyme, "item": item})
+    return interaction_data, user_data, item_data
+    """
+
+    # Read all data files
+    interactions_df = pd.read_csv(config.raw_data_fpath)
+    users_df = pd.read_csv(config.raw_user_data_fpath)
+    games_df = pd.read_csv(config.raw_item_data_fpath)
+
+    # Process interaction data
+    interaction_data = []
+    for row in interactions_df.itertuples():
+        interaction_data.append(
+            {"user": row.user_id, "item": row.game_id, "score": float(row.rating)}
+        )
+
+    # Process user data
+    user_data = {}
+    for row in users_df.itertuples():
+        user_data[row.id] = {"age": row.age, "gender": row.gender}
+
+    # Process item (game) data
+    item_data = {}
+    for row in games_df.itertuples():
+        item_data[row.id] = {"category": row.category, "difficulty": row.difficulty}
+
     return interaction_data, user_data, item_data
 
 
