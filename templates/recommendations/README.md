@@ -110,6 +110,44 @@ On a modern CPU, expect:
 - Medium datasets (100K-1M interactions): hours -- requires a GPU
 - Large datasets (>1M interactions): several hours to days -- requires a GPU
 
+## Dummy Data
+
+The template includes a synthetic dataset generator that creates realistic gaming data for testing and demonstration purposes. The data is stored in the `dummy_data` directory and consists of three CSV files:
+
+### Data Files
+
+1. `users.csv`: Contains user information with the following fields:
+   - `id`: Unique identifier for each user
+   - `age`: User's age (between 13-80 years)
+   - `gender`: User's gender (M/F)
+
+2. `games.csv`: Contains game information with the following fields:
+   - `id`: Unique identifier for each game
+   - `category`: Game category (RPG, FPS, Strategy, Sports, Puzzle, Adventure, Simulation, Fighting, Platform, Racing)
+   - `difficulty`: Game difficulty level (Easy, Medium, Hard, Expert)
+   - `created_at_ms`: Timestamp of game creation in milliseconds
+
+3. `user_ratings.csv`: Contains user-game interactions with the following fields:
+   - `user_id`: Reference to user ID
+   - `game_id`: Reference to game ID
+   - `rating`: Rating value (1-5)
+   - `timestamp_ms`: Timestamp of rating in milliseconds
+
+### Data Generation
+
+The dummy data is generated with realistic patterns and biases:
+- Age influences game preferences (e.g., younger users prefer FPS and Fighting games)
+- Gender affects category preferences (e.g., different preferences for Puzzle vs FPS games)
+- Age groups have different difficulty level preferences
+- Ratings include realistic noise and variations
+- Default generation creates:
+  - 50,000 users
+  - 5,000 games
+  - 500,000 ratings
+  - Data spanning 365 days
+
+The data generation code is provided in the repository and can be customized through the `GameGeneratorConfig` class to create different sized datasets or modify the generation parameters.
+
 ## Compatibility
 
 - Python 3.10+
