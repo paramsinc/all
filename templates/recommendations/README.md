@@ -5,9 +5,9 @@ The system uses collaborative filtering with neural embeddings and supports both
 
 ## Shape of the Problem
 
-We're considering a fixed set of users, as well as a fixed set of "items" (for instance products, songs, movies...).
+We're considering a fixed set of users, as well as a fixed set of "items" (for instance products, songs, games...).
 We're looking at "interactions" between users and items (for instance, "this user has listening to this song").
-An interaction can optionally have a score associated with it (for instance, "this user has rating to this song 4/5").
+An interaction can optionally have a score associated with it (for instance, "this user has rated to this song 4/5").
 Ratings are optional: the template will work with only binary interaction data or with ratings all the same.
 
 Based on interaction data, we're computing *embeddings* for users and for items. The dot product between
@@ -22,11 +22,10 @@ the template will work with only interaction data.
 
 ### Inputs
 
-1. Interaction data in CSV format with columns:
+1. Interaction data with:
    - User identifiers
    - Item identifiers 
    - Optional: interaction scores/ratings
-
 2. Optional user features
 3. Optional item features
 
@@ -34,15 +33,19 @@ the template will work with only interaction data.
 
 - Trained recommendation model
 - Top-N recommendations per user saved to `recommendations.json`
-- Optional: EDA visualizations saved to the `figures/` directory
+- Optional: data analysis visualizations saved to the `figures/` directory
 
 ## Usage
 
-1. Install dependencies using pip: `pip install -r requirements.txt`
+1. Install dependencies using pip:
+    - For usage with JAX GPU: `pip install -r requirements-jax.txt`
+    - For usage with PyTorch GPU: `pip install -r requirements-torch.txt`
+    - For usage with TensorFlow GPU: `pip install -r requirements-tensorflow.txt`
 
 2. Configure essential settings in `config.py`:
-    - Set `raw_data_fpath` to your data file path
-    - Adjust `min_interactions_per_user` and `min_interactions_per_item`
+    - Set `raw_interaction_data_fpath`/`raw_user_data_fpath`/`raw_item_data_fpath` to your data file path(s)
+    - Adjust `min_interactions_per_user` (minimum number of scores/ratings per user to keep the user in the data) and `min_interactions_per_item`
+    (minimum number of scores/ratings per items to keep the item in the data)
 
 3. Optionally, configure non-essential modeling settings in `config.py`:
     - Configure model parameters like `embedding_dim`
@@ -51,9 +54,9 @@ the template will work with only interaction data.
 4. Edit the function `get_raw_data()` in `data.py` to make sure
 it can parse your raw data file and turn it into the expected list of interaction dicts.
 This function should read your raw data file and return a tuple of:
-    - interaction_data: List of dicts with keys "user", "item", and optional "score"
-    - user_data: Dict of user features (optional)
-    - item_data: Dict of item features (optional)
+    - `interaction_data`: List of dicts with keys "user", "item", and optional "score"
+    - `user_data`: Dict of user features (optional)
+    - `item_data`: Dict of item features (optional)
 
 5. Run `python main.py` to start training a model. The following actions are available:
     - `python main.py exploratory_data_analysis`: Runs exploratory data analysis over the interaction data and saves figures in the `figures` folder
@@ -151,7 +154,6 @@ The data generation code is provided in the repository and can be customized thr
 ## Compatibility
 
 - Python 3.10+
-- Keras 3.0+
+- Keras 3.7+
 - Works with any Keras backend (TensorFlow, JAX, or PyTorch)
 - Supports CPU and GPU training
-

@@ -9,7 +9,7 @@ config = keras.utils.Config()
 parent = Path(__file__).parent
 
 # update these file paths to point to your data
-config.raw_data_fpath = str(parent / "_data/dummy_data/user_ratings.csv")
+config.raw_interaction_data_fpath = str(parent / "_data/dummy_data/user_ratings.csv")
 config.raw_user_data_fpath = str(parent / "_data/dummy_data/users.csv")
 config.raw_item_data_fpath = str(parent / "_data/dummy_data/games.csv")
 
@@ -37,16 +37,16 @@ config.user_features_config = None
 # set config.user_features_config = None
 # and config.item_features_config = None if not features are available
 config.user_features_config = {
-    "age": fs.string_categorical(name="age", num_oov_indices=0, output_mode="one_hot"),
+    "age": fs.float_normalized(name="age"),
     "gender": fs.string_categorical(
         name="gender", num_oov_indices=0, output_mode="one_hot"
     ),
 }
 config.item_features_config = {
-    "category": fs.integer_categorical(
+    "category": fs.string_categorical(
         name="category", num_oov_indices=0, output_mode="one_hot"
     ),
-    "difficulty": fs.integer_categorical(
+    "difficulty": fs.string_categorical(
         name="difficulty", num_oov_indices=0, output_mode="one_hot"
     ),
 }

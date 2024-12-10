@@ -1,0 +1,4 @@
+# Tensorflow with cuda support.
+tensorflow[and-cuda]~=2.18.0
+
+-r requirements-common.txt

@@ -248,6 +248,7 @@ def get_train_and_val_datasets(score_data, user_data, user_to_id, item_to_id):
     val_target_scores = target_scores[num_train_samples:]
 
     from baseline import compute_baseline_metrics
+
     print(compute_baseline_metrics(train_input_scores, val_target_scores))
 
     user_features = prepare_user_features(user_data, user_to_id)

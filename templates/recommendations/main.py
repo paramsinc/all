@@ -34,7 +34,7 @@ if __name__ == "__main__":
     print("Num users:", len(user_index))
     print("Num items:", len(item_index))
 
-    if action in {None, "exploratory_data_analysis"}:
+    if action == "exploratory_data_analysis":
         eda.display_all(interaction_data)
 
     if action in {None, "train_validation_model"}:

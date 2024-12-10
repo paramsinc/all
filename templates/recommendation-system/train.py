@@ -18,7 +18,9 @@ def masked_binary_crossentropy(y_true, y_pred, mask_value=0):
     """
     mask = ops.cast(ops.not_equal(y_true, mask_value), dtype=y_pred.dtype)
     raw_error = ops.binary_crossentropy(y_true, y_pred) * mask
-    masked_error = ops.sum(raw_error, axis=-1) / (ops.sum(mask, axis=-1) + keras.config.epsilon())
+    masked_error = ops.sum(raw_error, axis=-1) / (
+        ops.sum(mask, axis=-1) + keras.config.epsilon()
+    )
     return masked_error
 
 
@@ -35,13 +37,15 @@ def masked_mse(y_true, y_pred, mask_value=0):
     """
     mask = ops.cast(ops.not_equal(y_true, mask_value), dtype=y_pred.dtype)
     squared_diff = ops.square(y_true - y_pred) * mask
-    return ops.sum(squared_diff, axis=-1) / (ops.sum(mask, axis=-1) + keras.config.epsilon())
+    return ops.sum(squared_diff, axis=-1) / (
+        ops.sum(mask, axis=-1) + keras.config.epsilon()
+    )
 
 
 @keras.saving.register_keras_serializable(package="recsys")
 def masked_mae(y_true, y_pred, mask_value=0):
     """Computes the mean absolute error over known scores only, and unscale it.
-    
+
     Args:
         y_true: The true score tensor.
         y_pred: The predicted score tensor.
@@ -51,7 +55,9 @@ def masked_mae(y_true, y_pred, mask_value=0):
     """
     mask = ops.cast(ops.not_equal(y_true, mask_value), dtype=y_pred.dtype)
     raw_error = ops.abs(y_true - y_pred) * mask
-    masked_error = ops.sum(raw_error, axis=-1) / (ops.sum(mask, axis=-1) + keras.config.epsilon())
+    masked_error = ops.sum(raw_error, axis=-1) / (
+        ops.sum(mask, axis=-1) + keras.config.epsilon()
+    )
     if config.score_scaling_factor is not None:
         return masked_error * config.score_scaling_factor
     return masked_error
@@ -59,7 +65,7 @@ def masked_mae(y_true, y_pred, mask_value=0):
 
 def train_model(model, train_ds, val_ds=None, num_epochs=None):
     """Train and evaluate a model.
-    
+
     Args:
         model: Keras model instance.
         train_ds: Training dataset.
@@ -92,7 +98,12 @@ def train_model(model, train_ds, val_ds=None, num_epochs=None):
     loss = masked_binary_crossentropy
     if num_epochs is None:
         callbacks.append(
-            keras.callbacks.EarlyStopping(patience=config.early_stopping_patience, monitor=monitor, verbose=1, restore_best_weights=True)
+            keras.callbacks.EarlyStopping(
+                patience=config.early_stopping_patience,
+                monitor=monitor,
+                verbose=1,
+                restore_best_weights=True,
+            )
         )
         num_epochs = config.max_epochs
 

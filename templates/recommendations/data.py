@@ -23,20 +23,23 @@ def get_raw_data():
         - user_data: Dict such as {"feature_name": value, ...}
         - item_data: Dict such as { "feature_name": value, ...}
 
-    # Example
-    df = pd.read_csv(config.raw_data_fpath)
-    interaction_data = []
-    user_data = {}
-    item_data = {}
-    for row in df.itertuples():
-        items = row.no_seq_anonyme.split(" ")
-        for item in items:
-            interaction_data.append({"user": row.id_usager_anonyme, "item": item})
-    return interaction_data, user_data, item_data
-    """
+    Example:
 
+    ```python
+    def get_raw_data():
+        df = pd.read_csv(config.raw_interaction_data_fpath)
+        interaction_data = []
+        user_data = {}
+        item_data = {}
+        for row in df.itertuples():
+            items = row.fields.split(" ")
+            for item in items:
+                interaction_data.append({"user": row.id, "item": item})
+        return interaction_data, user_data, item_data
+    ```
+    """
     # Read all data files
-    interactions_df = pd.read_csv(config.raw_data_fpath)
+    interactions_df = pd.read_csv(config.raw_interaction_data_fpath)
     users_df = pd.read_csv(config.raw_user_data_fpath)
     games_df = pd.read_csv(config.raw_item_data_fpath)
 
