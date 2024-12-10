@@ -1,10 +1,16 @@
+from pathlib import Path
+
 import keras
 from keras.utils import FeatureSpace as fs
 
 config = keras.utils.Config()
 
 # Path to file of scores/rating data
-config.raw_data_fpath = "/Users/francoischollet/Downloads/banq.csv"  # "FILL/ME.csv"  #
+parent = Path(__file__).parent
+config.raw_data_fpath = str(parent / "_data/dummy_data/user_ratings.csv")
+config.raw_user_data_fpath = str(parent / "_data/dummy_data/users.csv")
+config.raw_item_data_fpath = str(parent / "_data/dummy_data/games.csv")
+
 config.prod_model_path = "models/prod_model.weights.h5"
 config.checkpoint_dir = "models/tmp"
 config.recommendations_json_fpath = "recommendations.json"
@@ -29,10 +35,16 @@ config.user_features_config = None
 # and config.item_features_config = None if not features are available
 config.user_features_config = {
     "age": fs.string_categorical(name="age", num_oov_indices=0, output_mode="one_hot"),
+    "gender": fs.string_categorical(
+        name="gender", num_oov_indices=0, output_mode="one_hot"
+    ),
 }
 config.item_features_config = {
     "category": fs.integer_categorical(
         name="category", num_oov_indices=0, output_mode="one_hot"
+    ),
+    "difficulty": fs.integer_categorical(
+        name="difficulty", num_oov_indices=0, output_mode="one_hot"
     ),
 }
 
