@@ -7,6 +7,8 @@ config = keras.utils.Config()
 
 # Path to file of scores/rating data
 parent = Path(__file__).parent
+
+# update these file paths to point to your data
 config.raw_data_fpath = str(parent / "_data/dummy_data/user_ratings.csv")
 config.raw_user_data_fpath = str(parent / "_data/dummy_data/users.csv")
 config.raw_item_data_fpath = str(parent / "_data/dummy_data/games.csv")
@@ -31,6 +33,7 @@ config.embedding_dim = 1024
 config.user_features_config = None
 
 # Feature config
+# update these configs according to your data
 # set config.user_features_config = None
 # and config.item_features_config = None if not features are available
 config.user_features_config = {
