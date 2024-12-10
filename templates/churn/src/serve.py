@@ -51,7 +51,6 @@ class Event(BaseModel):
     timestamp: datetime
 
 
-# TODO impl the rest
 @app.post("/predict_churn", response_model=list[float])
 def predict_churn(sequences: list[list[Event]]) -> list[float]:
     x_test_event: list[list[int]] = [
