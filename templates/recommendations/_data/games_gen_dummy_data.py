@@ -12,9 +12,9 @@ import pandas as pd
 @dataclass
 class GameGeneratorConfig:
     # Data size configuration
-    N_USERS: int = 10_000
-    N_GAMES: int = 1_000
-    N_RATINGS: int = 100_000
+    N_USERS: int = 100_000
+    N_GAMES: int = 10_000
+    N_RATINGS: int = 1_000_000
     TIME_PERIOD_DAYS: int = 365
 
     # User generation parameters
@@ -300,10 +300,10 @@ class GameDataGenerator:
 def main():
     # Example usage with custom configuration
     config = GameGeneratorConfig(
-        N_USERS=10_000,
-        N_GAMES=1_000,
-        N_RATINGS=100_000,
-        TIME_PERIOD_DAYS=180,
+        # N_USERS=10_000,
+        # N_GAMES=1_000,
+        # N_RATINGS=100_000,
+        # TIME_PERIOD_DAYS=180,
     )
 
     generator = GameDataGenerator(config)
