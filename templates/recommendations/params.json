@@ -4,5 +4,6 @@
     "sidebar": {
       "Introduction": "README.md"
     }
-  }
+  },
+  "enable_notebook": true
 }
