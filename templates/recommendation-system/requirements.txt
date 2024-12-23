@@ -1,6 +1,0 @@
-keras>=3.6.0
-pandas
-matplotlib
-scipy
-numpy
-pyarrow

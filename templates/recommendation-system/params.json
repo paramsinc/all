@@ -1,8 +1,0 @@
-{
-  "docs": {
-    "main": "readme.md",
-    "sidebar": {
-      "Readme": "readme.md"
-    }
-  }
-}
